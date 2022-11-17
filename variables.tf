@@ -16,6 +16,7 @@ variable "pool_configurations" {
   - `allocation_max_netmask_length`     = (optional, string)
   - `allocation_min_netmask_length`     = (optional, string)
   - `allocation_resource_tags`          = (optional, map(string))
+  - `create_scp`                        = (optional, bool) Defaulted to false. Enter true, if SCP has to be created for IPAM pool with the account(s) mentioned in ram_share_principals
 
   The following arguments are available but only relevant for public ips
   - `cidr_authorization_context` = (optional, map(string)) Details found in [official documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_ipam_pool_cidr#cidr_authorization_context).
