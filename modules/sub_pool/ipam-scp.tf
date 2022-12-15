@@ -16,6 +16,7 @@ resource "aws_organizations_policy" "restrict_ipam_pools" {
   description = "Restrict IPAM pool for Acc # ${each.key}"
 
   content = jsonencode({
+    Version   = "2012-10-17"
     statement = {
       sid       = "RestrictIpamPools"
       effect    = "Deny"
