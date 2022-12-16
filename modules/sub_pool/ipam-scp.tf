@@ -16,18 +16,17 @@ resource "aws_organizations_policy" "restrict_ipam_pools" {
   description = "Restrict IPAM pool for Acc # ${each.key}"
 
   content = jsonencode({
-    Version = "2012-10-17"
+    version = "2012-10-17"
     statement = [
       {
-        sid       = "RestrictIpamPools"
-        effect    = "Deny"
-        actions   = ["ec2:CreateVpc", "ec2:AssociateVpcCidrBlock"]
-        resources = ["arn:aws:ec2:${var.implied_locale != "None" ? var.implied_locale : var.pool_config.locale}:*:vpc/*"]
+        effect   = "Deny",
+        action   = ["ec2:CreateVpc", "ec2:AssociateVpcCidrBlock"],
+        resource = "arn:aws:ec2:*:*:vpc/*",
 
         condition = {
-          test     = "StringNotEquals"
-          variable = "ec2:Ipv4IpamPoolId"
-          values   = [aws_vpc_ipam_pool.sub.id]
+          "StringNotEquals" : {
+            "ec2:Ipv4IpamPoolId" : aws_vpc_ipam_pool.sub.id
+          }
         }
       }
     ]
