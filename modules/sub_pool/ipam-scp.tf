@@ -21,7 +21,7 @@ resource "aws_organizations_policy" "restrict_ipam_pools" {
       {
         effect   = "Deny",
         action   = ["ec2:CreateVpc", "ec2:AssociateVpcCidrBlock"],
-        resource = "arn:aws:ec2:*:*:vpc/*",
+        resource = "arn:aws:ec2:${var.implied_locale != "None" ? var.implied_locale : var.pool_config.locale}:*:vpc/*",
 
         condition = {
           "StringNotEquals" : {
