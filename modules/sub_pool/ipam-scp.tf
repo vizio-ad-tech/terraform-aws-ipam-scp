@@ -12,18 +12,18 @@ resource "aws_organizations_policy" "restrict_ipam_pools" {
   provider = aws.root
 
   for_each    = local.scp_enabled ? toset(var.pool_config.ram_share_principals) : []
-  name        = "Restrict IPAM Pool Acc # ${each.key}"
-  description = "Restrict IPAM pool for Acc # ${each.key}"
+  name        = "Restrict IPAM Pool ${var.implied_name}"
+  description = "Restrict IPAM Pool #${each.key} ${var.implied_locale != "None" ? var.implied_locale : var.pool_config.locale}"
 
   content = jsonencode({
-    version = "2012-10-17"
-    statement = [
+    "Version" : "2012-10-17"
+    "Statement" : [
       {
-        effect   = "Deny",
-        action   = ["ec2:CreateVpc", "ec2:AssociateVpcCidrBlock"],
-        resource = "arn:aws:ec2:${var.implied_locale != "None" ? var.implied_locale : var.pool_config.locale}:*:vpc/*",
+        "Effect" : "Deny",
+        "Action" : ["ec2:CreateVpc", "ec2:AssociateVpcCidrBlock"],
+        "Resource" : "arn:aws:ec2:${var.implied_locale != "None" ? var.implied_locale : var.pool_config.locale}:*:vpc/*",
 
-        condition = {
+        "Condition" : {
           "StringNotEquals" : {
             "ec2:Ipv4IpamPoolId" : aws_vpc_ipam_pool.sub.id
           }
