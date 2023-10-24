@@ -12,7 +12,7 @@ resource "aws_organizations_policy" "restrict_ipam_pools" {
   provider = aws.root
 
   for_each    = local.scp_enabled ? toset(var.pool_config.ram_share_principals) : []
-  name        = "Restrict IPAM Pool ${var.implied_name}"
+  name        = "Restrict IPAM Pool ${var.implied_name} ${each.key}"
   description = "Restrict IPAM Pool #${each.key} ${var.implied_locale != "None" ? var.implied_locale : var.pool_config.locale}"
 
   content = jsonencode({
