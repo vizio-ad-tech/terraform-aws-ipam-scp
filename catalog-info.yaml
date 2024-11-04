@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: terraform-aws-ipam-scp
+  description: Deploys both simple and complex Amazon Virtual Private Cloud (Amazon VPC) IP Address Manager (IPAM) configurations.
+  annotations:
+    github.com/project-slug: vizio-ad-tech/terraform-aws-ipam-scp
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - terraform
+spec:
+  type: utility
+  lifecycle: experimental
+  owner: vizio-ad-tech/ikon
+  system: vail
